@@ -2,6 +2,7 @@
 #include <stdbool.h>
 
 int main(){
+	//initialize polybius square
 	char square[6][6] = {
 		{'b','c','d','e','f','g'},
 		{'m','l','k','j','i','h'},
@@ -23,6 +24,7 @@ int main(){
 	messageLen = strlen(message);
 	keyLen = strlen(key);
 	
+	// assign adfgvx coordinates for each letter
 	char cipher1[2*messageLen]; 
 	for(i=0;i<messageLen;i++){
 		for(j=0;j<6;j++){
@@ -41,25 +43,27 @@ int main(){
 	}
 	int cipherLen = sizeof(cipher1);
 	
+	// get the order of the letters in the key
 	int keyOrder[keyLen];
-    int pos = 0;
-    for (i = (int)'a'; pos < keyLen; i++){
-        for (j = 0; j < keyLen; j++){
-            if (key[j] == (char)i) keyOrder[pos++] = j;
-        }
-    }
+	int pos = 0;
+	for (i = (int)'a'; pos < keyLen; i++){
+		for (j = 0; j < keyLen; j++){
+			if (key[j] == (char)i) keyOrder[pos++] = j;
+		}
+	}
     
-    int rows;
-    bool even = true;
-    char cipher2[cipherLen];
-    if(cipherLen%keyLen>0){
-    	rows = cipherLen/keyLen + 1;
-    	even = false;
-    }else{
-    	rows = cipherLen/keyLen;
-    }
+    // calculate number of rows
+	int rows;
+	bool even = true;
+	char cipher2[cipherLen];
+	if(cipherLen%keyLen>0){
+		rows = cipherLen/keyLen + 1;
+		even = false;
+	}else{
+		rows = cipherLen/keyLen;
+	}
 	
-	
+	// magic
 	for(i=0,j=0,k=0;i<cipherLen;i++){
 		cipher2[i]=cipher1[keyOrder[j]+k*keyLen];
 		if(!even){
